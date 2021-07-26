@@ -1,18 +1,18 @@
-var buttonColors = ["red", "blue", "green", "yellow"];
-var gamePattern = [];
-var userClickedPattern = [];
-var level = 0;
-var triggered = 0;
+const buttonColors = ["red", "blue", "green", "yellow"];
+let gamePattern = [];
+let userClickedPattern = [];
+let level = 0;
+let triggered = 0;
 
-function playSound(audioName) {
-  var audio = new Audio("sounds/" + audioName + ".mp3");
+const playSound = (audioName) => {
+  const audio = new Audio("sounds/" + audioName + ".mp3");
   audio.play();
   audio.volume = 0.2;
 }
 
-function nextSequence() {
-  var randomNumber = Math.floor(Math.random() * 4);
-  var randomColor = buttonColors[randomNumber];
+const nextSequence = () => {
+  const randomNumber = Math.floor(Math.random() * 4);
+  const randomColor = buttonColors[randomNumber];
   gamePattern.push(randomColor);
 
   $("#" + randomColor).fadeOut(100).fadeIn(100);
@@ -38,15 +38,15 @@ $(".btn").click(function () {
 });
 
 
-function animatePress(currentColor) {
+const animatePress = (currentColor) => {
   $("#" + currentColor).addClass("pressed");
 
-  setTimeout(function () {
+  setTimeout( () => {
     $("#" + currentColor).removeClass("pressed");
   }, 100);
 }
 
-$(document).keydown(function () {
+$(document).keydown( () => {
   if (triggered < 1) {
     nextSequence();
   }
@@ -54,12 +54,12 @@ $(document).keydown(function () {
   console.log("triggered");
 });
 
-function checkAnswer(currentLevel) {
+const checkAnswer = (currentLevel) => {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
     console.log("succes");
 
     if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function () {
+      setTimeout( () => {
         nextSequence();
       }, 1000);
     }
@@ -67,7 +67,7 @@ function checkAnswer(currentLevel) {
     playSound('wrong');
 
     $("body").addClass("game-over");
-    setTimeout(function () {
+    setTimeout( () => {
       $("body").removeClass("game-over");
     }, 180);
 
@@ -79,7 +79,7 @@ function checkAnswer(currentLevel) {
   console.log(gamePattern);
 }
 
-function startOver() {
+const startOver = () => {
   level = 0;
   gamePattern = [];
   triggered = 0;
